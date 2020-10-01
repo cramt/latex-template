@@ -1,0 +1,38 @@
+\input{setup/preamble.tex}% package inclusion and set up of the document
+\input{setup/hyphenations.tex}% 
+\input{setup/macros.tex}% my new macros
+
+\immediate\write18{ruby scripts/get_char_count.rb --fast}
+\openin 1="current_char_count.tmp"
+\read 1 to \charactercount
+\closein 1
+\openin 2="current_page_count.tmp"
+\read 2 to \pagecount
+\closein 2
+
+\begin{document}
+%frontmatter
+\pagestyle{empty} %disable headers and footers
+\pagenumbering{roman} %use roman page numbering in the frontmatter
+\input{sections/formalities/frontpage.tex}
+\input{sections/formalities/colophon.tex}
+\input{sections/formalities/titlepages.tex}
+\pdfbookmark[0]{Contents}{label:contents}
+\pagestyle{fancy} %enable headers and footers again
+\input{sections/formalities/preface.tex}
+\tableofcontents
+\cleardoublepage
+%mainmatter
+\pagenumbering{arabic} %use arabic page numbering in the mainmatter
+
+\input{sections.tex}
+
+%\input{sections/relfektion/reflektion.tex}
+
+\printbibliography[heading=bibintoc]
+\label{bib:mybiblio}
+\begin{appendices}
+%appendicies
+\end{appendices}
+
+\end{document}
